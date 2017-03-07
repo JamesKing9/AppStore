@@ -1,0 +1,1 @@
+include ':databindingdemo', ':app', ':coordinatorlayoutdemo', ':collapsingtoolbarlayoutdemo', ':recycleviewdemo'
