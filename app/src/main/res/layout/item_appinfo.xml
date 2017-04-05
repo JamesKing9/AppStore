@@ -1,9 +1,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
-        <import type="com.itheima.appstore.utils.StringUtils"/>
+
+        <import type="com.cheng.appstore.utils.StringUtils" />
+
         <variable
             name="app"
-            type="com.itheima.appstore.model.net.AppInfo"/>
+            type="com.cheng.appstore.model.net.AppInfo" />
     </data>
 
     <FrameLayout
@@ -85,7 +88,7 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <com.itheima.appstore.views.RingProgress
+                    <com.cheng.appstore.views.RingProgress
                         android:id="@+id/progress"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />

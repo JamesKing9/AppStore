@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.itheima.appstore">
+    package="com.cheng.appstore">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".MyApplication"
+        android:name="com.cheng.appstore.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -29,7 +29,7 @@
             android:value="com.itheima.appstore.model.db" />
 
         <activity
-            android:name=".vm.activity.MainActivity"
+            android:name="com.cheng.appstore.vm.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,13 +38,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".vm.activity.DetailActivity"
+            android:name="com.cheng.appstore.vm.activity.DetailActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <receiver android:name=".vm.receiver.AppChange">
+        <receiver android:name="com.cheng.appstore.vm.receiver.AppChange">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>

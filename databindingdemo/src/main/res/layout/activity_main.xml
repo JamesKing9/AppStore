@@ -5,13 +5,13 @@
 
         <variable
             name="user"
-            type="com.itheima.databindingdemo.model.bean.User" />
+            type="com.cheng.databindingdemo.model.bean.User" />
     </data>
 
     <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.itheima.databindingdemo.MainActivity">
+        tools:context="com.cheng.databindingdemo.MainActivity">
 
         <TextView
             android:layout_width="wrap_content"

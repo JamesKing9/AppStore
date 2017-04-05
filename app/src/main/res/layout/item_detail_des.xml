@@ -2,11 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <import type="com.itheima.appstore.utils.StringUtils" />
-        <import type="com.itheima.appstore.R" />
+        <import type="com.cheng.appstore.utils.StringUtils" />
+        <import type="com.cheng.appstore.R" />
         <variable
             name="app"
-            type="com.itheima.appstore.model.net.AppInfo" />
+            type="com.cheng.appstore.model.net.AppInfo" />
     </data>
 
 

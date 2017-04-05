@@ -3,7 +3,7 @@
     <data>
         <variable
             name="category"
-            type="com.itheima.appstore.model.net.CategoryInfo"/>
+            type="com.cheng.appstore.model.net.CategoryInfo"/>
     </data>
     <FrameLayout
         android:layout_width="match_parent"
