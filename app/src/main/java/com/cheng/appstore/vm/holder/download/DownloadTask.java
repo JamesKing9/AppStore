@@ -92,7 +92,7 @@ public class DownloadTask extends ThreadPoolUtils.Task {
     }
 
     /**
-     * 拼接url地址
+     * 获取url地址
      * @return
      */
     @NonNull

@@ -52,7 +52,7 @@ public class HttpUtils {
      * @return ?index=0
      */
     public static String getUrlParamsByMap(Map<String, Object> map) {
-        if (map == null) {
+        if (map == null) { /*如果map为空，则返回空字符串 “”*/
             return "";
         }
         StringBuffer sb = new StringBuffer("?"); /*1、添加引用符‘？’*/
