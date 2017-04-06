@@ -58,7 +58,7 @@ public class FileUtils {
     }
 
     /**
-     * 获取应用目录，当SD卡存在时，获取SD卡上的目录，当SD卡不存在时，获取应用的cache目录
+     * 获取应用目录(路径)，当SD卡存在时，获取SD卡上的目录，当SD卡不存在时，获取应用的cache目录
      */
     public static String getDir(String name) {
         StringBuilder sb = new StringBuilder();

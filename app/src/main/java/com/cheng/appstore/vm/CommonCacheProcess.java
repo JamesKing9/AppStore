@@ -19,9 +19,6 @@ public class CommonCacheProcess {
     /**
      * 从手机本地获取json数据；
      * 包括：内存、本地文件
-     *
-     * @param key
-     * @return
      */
     public static String getLocalJson(String key) {
         String json = getFromMemory(key);
@@ -33,9 +30,6 @@ public class CommonCacheProcess {
 
     /**
      * 从内存中读取数据
-     *
-     * @param key
-     * @return
      */
     public static String getFromMemory(String key) {
         return MyApplication.getProtocolCache().get(key);
@@ -62,9 +56,9 @@ public class CommonCacheProcess {
             // 约定文件的存储格式及内容：
             // 文件的第一行存放系统当前时间
             // 文件的第二行存放Json字符串
-
             try {
                 FileReader reader = new FileReader(file);
+                /*java.io.BufferedReader*/
                 BufferedReader bufferedReader = new BufferedReader(reader);
                 String timeStr = bufferedReader.readLine();// 系统当前时间
                 long createTime = Long.valueOf(timeStr);
@@ -77,15 +71,11 @@ public class CommonCacheProcess {
 
                     return json;
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             return null;
         }
-
-
         return MyApplication.getProtocolCache().get(key);
     }
 

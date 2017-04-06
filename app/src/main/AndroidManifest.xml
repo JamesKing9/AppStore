@@ -15,9 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!--配置meta-data
+        1.	DATABASE：告知Sugar数据库文件的名字。
+        2.	VERSION：告知Sugar当前的数据库版本。同样的，当当前版本比数据库文件的版本高的话，Sugar会自动帮我们执行升级操作。
+        3.	QUERY_LOG： 选择是否记录搜索语句到日志环境，这样你可以看到执行的查询SQL，便于确认的你SQL是否正确
+        4.	DOMAIN_PACKAGE_NAME：DOMAIN实体Bean，实体Bean所在包的名字。这个值告诉Sugar我们的程序的数据结构类的保存路径。Sugar会自动根据这个指定路径下面的所有类的结构去生成数据表及其对应的增删查改（CRUD）接口。
+        -->
         <meta-data
             android:name="DATABASE"
-            android:value="itheima.db" />
+            android:value="app_store.db" />
         <meta-data
             android:name="VERSION"
             android:value="1" />
@@ -26,7 +32,7 @@
             android:value="true" />
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
-            android:value="com.itheima.appstore.model.db" />
+            android:value="com.cheng.appstore.model.db" />
 
         <activity
             android:name="com.cheng.appstore.vm.activity.MainActivity"

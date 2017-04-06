@@ -15,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
 //        setContentView(R.layout.activity_main);
 
         // Binding有一个设置User的入口，setUser
-        ActivityMainBinding binding= DataBindingUtil.setContentView(this,R.layout.activity_main);
-        User user=new User("itheima");
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        User user = new User("cheng");
         binding.setUser(user);
     }
 }

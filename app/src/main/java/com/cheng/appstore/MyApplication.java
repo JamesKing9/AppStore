@@ -16,9 +16,10 @@ import java.util.HashMap;
 public class MyApplication extends Application {
     private static Context context;
     private static Handler handler;
-    // 缓存协议数据（json）
+    // 缓存协议数据（json）（protocol,（数据传递的）协议）
     private static HashMap<String, String> protocolCache;
     private static Gson gson = new Gson();
+
     public static Context getContext() {
         return context;
     }
@@ -41,8 +42,17 @@ public class MyApplication extends Application {
         context = getApplicationContext();
         handler = new Handler();
         protocolCache = new HashMap<>();
+        //Sugar 初始化相应的动作
         SugarContext.init(this);
     }
+
+    /**
+     * This method is for use in emulated process environments.  It will
+     * never be called on a production Android device, where processes are
+     * removed by simply killing them; no user code (including this callback)
+     * is executed when doing so.
+     */
+    //Sugar 结束相应的动作
     @Override
     public void onTerminate() {
         super.onTerminate();

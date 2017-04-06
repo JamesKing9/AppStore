@@ -56,12 +56,11 @@ public class HttpUtils {
             return "";
         }
         StringBuffer sb = new StringBuffer("?"); /*1、添加引用符‘？’*/
-        for (Map.Entry<String, Object> entry:  /*foreach：遍历map中的entry实体元素*/
-        map.entrySet()){
+        for (Map.Entry<String, Object> entry : map.entrySet()) { /*foreach：遍历map中的entry实体元素*/
+
             sb.append(entry.getKey() + "=" + entry.getValue());
             sb.append("&"); /*2、添加分隔符‘&’*/
         }
-
         String s = sb.toString(); /*将字符串缓冲池拼接成字符串*/
         if (s.endsWith("&")) {
             /*去除结尾的分隔符‘&’*/

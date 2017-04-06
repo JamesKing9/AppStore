@@ -8,7 +8,6 @@ import com.orm.SugarRecord;
 
 import java.util.List;
 
-
 public class AppEntity extends SugarRecord {
 
     public Long appId;
@@ -19,6 +18,7 @@ public class AppEntity extends SugarRecord {
 
     public static void saveEntityByAppId(DownloadInfo downloadInfo) {
         AppEntity entity = null;
+        //查询数据库，得到结果集
         List<AppEntity> list = find(AppEntity.class, "app_id=" + downloadInfo.appId);
         if (list != null && list.size() > 0) {
             entity = list.get(0);

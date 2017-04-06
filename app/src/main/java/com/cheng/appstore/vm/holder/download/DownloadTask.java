@@ -44,52 +44,52 @@ public class DownloadTask extends ThreadPoolUtils.Task {
             //真正开始在子线中中下载apk
             OkHttpClient okHttpClient = new OkHttpClient();
             String url = getUrl();
-            Request request = new Request.Builder().get().url(url).build();
+            Request request = new Request
+                    .Builder()
+                    .get()
+                    .url(url)
+                    .build();
 
             Response response = okHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
-                in = response.body().byteStream();
-                // 下载到Sdcard的/data/android/包名/apk/packageName.apk
-                File saveApk = FileUtils.getApk(downloadInfo.packageName);
-                out = new FileOutputStream(saveApk, true);//②,写文件的时候,以追加的方式去写
+            in = response.body().byteStream();
+            // 下载到Sdcard的/data/android/包名/apk/packageName.apk
+            File saveApk = FileUtils.getApk(downloadInfo.packageName);
+            out = new FileOutputStream(saveApk, true);//②,写文件的时候,以追加的方式去写
 
-                int len = 0;
-                byte[] buffer = new byte[1024];
+            int len = 0;
+            byte[] buffer = new byte[1024];
 
-                setState(State.DOWNLOADING);
-                while (true) {
-                    if (downloadInfo.state == State.DOWNLOAD_STOP) {
-                        AppEntity.saveEntityByAppId(downloadInfo);
-                        break;
-                    }
-                    len = in.read(buffer);
-                    out.write(buffer, 0, len);
-                    // 显示进度
-                    downloadInfo.downloadSize += len;
-
-                    DownloadManager.getInstance().notifyObserves(downloadInfo.appId);
-
-                    if (downloadInfo.downloadSize == downloadInfo.size) {
-                        // 显示安装
-                        setState(State.DOWNLOAD_COMPLETED);
-                        break;
-                    }
+            setState(State.DOWNLOADING);
+            while (true) {
+                if (downloadInfo.state == State.DOWNLOAD_STOP) {
+                    AppEntity.saveEntityByAppId(downloadInfo);
+                    break;
                 }
-            } else {
-                // 显示重试
-                setState(State.DOWNLOAD_ERROR);
+                len = in.read(buffer);
+                out.write(buffer, 0, len);
+                // 显示进度
+                downloadInfo.downloadSize += len;
+
+                DownloadManager.getInstance().notifyObserves(downloadInfo.appId);
+
+                if (downloadInfo.downloadSize == downloadInfo.size) {
+                    // 显示安装
+                    setState(State.DOWNLOAD_COMPLETED);
+                    break;
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            // 显示重试
-            setState(State.DOWNLOAD_ERROR);
-        } finally {
-            IOUtils.close(out);
-            IOUtils.close(in);
+        } else {
+            setState(State.DOWNLOAD_ERROR); // 显示重试
         }
-
-
+    } catch (Exception e) {
+        e.printStackTrace();
+        setState(State.DOWNLOAD_ERROR); // 显示重试
+    } finally {
+        IOUtils.close(out);
+        IOUtils.close(in);
     }
+}
 
     /**
      * 获取url地址
@@ -100,7 +100,6 @@ public class DownloadTask extends ThreadPoolUtils.Task {
         //http://localhost:8080/GooglePlayServer/download?name=app/com.itheima.www/com.itheima.www.apk&range=0
         StringBuffer urlBuffer = new StringBuffer(Constants.Http.HOST);
         urlBuffer.append(Constants.Http.DOWNLOAD);
-
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("name", downloadInfo.downloadUrl);
         paramsMap.put("range", downloadInfo.downloadSize > 0 ? downloadInfo.downloadSize : 0);

@@ -32,5 +32,5 @@ public class Constants {
         public static final String DOWNLOAD = "download";
     }
 
-    public static final long DURATION=5*60*1000;// 时间间隔5分钟
+    public static final long DURATION = 5 * 60 * 1000;// 时间间隔5分钟
 }

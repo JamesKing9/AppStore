@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <!--声明一个全局变量：type 声明是哪个类，name 声明类的变量名-->
         <variable
             name="user"
             type="com.cheng.databindingdemo.model.bean.User" />

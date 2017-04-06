@@ -1,7 +1,7 @@
 package com.cheng.databindingdemo.model.bean;
 
 /**
- * Created by itheima.
+ * 布局文件中控件和属性绑定的实体bean
  */
 public class User {
     public String name;
