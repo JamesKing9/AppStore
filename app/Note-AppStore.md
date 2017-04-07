@@ -251,6 +251,336 @@ select * from APP_ENTITY;
 .exit
 ```
 
+# 首页
+
+![device-2017-04-07-224530](../device-2017-04-07-224530.png)
+
+## 1、轮播图
+
+## 2、RecyclerView 列表
+```java
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.RecyclerView;
+import android.view.Display;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+import com.cheng.appstore.Constants;
+import com.cheng.appstore.MyApplication;
+import com.cheng.appstore.R;
+import com.cheng.appstore.model.net.AppInfo;
+import com.cheng.appstore.model.net.HomeInfo;
+import com.cheng.appstore.utils.HttpUtils;
+import com.cheng.appstore.utils.UIUtils;
+import com.cheng.appstore.vm.holder.BaseHolder;
+import com.cheng.appstore.vm.holder.NextPagerHolder;
+
+import java.util.HashMap;
+import java.util.List;
+
+public class HomeAdapter extends RecyclerView.Adapter<AppInfo> {
+    protected List<D> datas;
+    protected NextPagerHolder nextPagerHolder;
+
+    // 如果加载其他样式的Item我们需要做的工作：
+    // 判断具体有那些样式：2种（普通、加载下一页）
+    protected static final int NOMAL = 0;
+    protected static final int NEXTPAGER = 2;
+
+    public BaseRecyclerViewAdapter(List<D> datas) {
+        this.datas = datas;
+    }
+
+    /**
+     * 获取不同界面需要展示数据的服务器链接
+     * @return
+     */
+    protected abstract String getPath();
+
+
+    @Override
+    public BaseHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        BaseHolder holder = null;
+        switch (viewType) {
+            case NOMAL:
+                // 处理通用的项布局加载
+                // 两种处理方案：
+                // 1、交给子类完成
+                // 2、依据getPath来区分不同的Adapter，从而创建对应的Holder
+
+                if(getPath().equals(Constants.Http.SUBJECT)){
+                    holder=new SubjectInfoHolder(LayoutInflater.from(
+                            parent.getContext()).inflate(getNomalLayoutDesId(), parent,
+                            false));
+                }else {
+                    holder = new AppInfoHolder(LayoutInflater.from(
+                            parent.getContext()).inflate(getNomalLayoutDesId(), parent,
+                            false));
+                }
+                break;
+            case NEXTPAGER:
+                holder = nextPagerHolder = new NextPagerHolder(LayoutInflater.from(
+                        parent.getContext()).inflate(R.layout.item_loadmore, parent,
+                        false), this);
+
+                break;
+        }
+
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(BaseHolder holder, int position) {
+        switch (holder.getItemViewType()) {
+            case NOMAL:
+                D data = getNomalItemData(position);
+                holder.setData(data);
+                break;
+            case NEXTPAGER:
+                LogUtils.s("加载下一页数据");
+                // 最后一项显现出来，这样就不用判断RecyclerView是否滚动到底部
+                holder.setData(NextPagerHolder.LOADING);
+                loadNextPagerData();
+                break;
+        }
+
+    }
+
+    /**
+     * 获取通用条目的数据
+     * @param position
+     * @return
+     */
+    protected abstract D getNomalItemData(int position);
+
+
+    /**
+     * 获取通用条目布局的id信息
+     * @return
+     */
+    protected abstract int getNomalLayoutDesId();
+
+    /**
+     * 加载下一页数据
+     *
+     */
+    public void loadNextPagerData() {
+
+        // 加载本地
+        // 是否加载到数据
+        // 加载到，展示界面
+        // 没加载到，获取网络数据
+        // 是否加载到数据
+        // 加载到，展示界面
+        // 没加载到，重试界面显示
+
+        // 判断是否含有下一页数据
+        // 有，显示加载中条目
+        // 没有，什么都不显示
+
+        String key = getPath() + "." + datas.size();
+        String json = CommonCacheProcess.getLocalJson(key);
+
+        if (json == null) {
+            // 加载网络数据
+            OkHttpClient client = new OkHttpClient();
+
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("index", datas.size());
+            final Request request = HttpUtils.getRequest(getPath(), params);
+
+            Call call = HttpUtils.getClient().newCall(request);
+
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    // 显示重试条目
+                    nextPagerHolder.setData(NextPagerHolder.ERROR);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    // 判断是否获取到数据
+                    if (response.code() == 200) {
+                        String json = response.body().string();
+                        showNextPagerData(json);
+                    } else {
+                        // 显示重试条目
+                        nextPagerHolder.setData(NextPagerHolder.ERROR);
+                    }
+                }
+            });
+
+        } else {
+            // 加载本地数据
+            showNextPagerData(json);
+        }
+    }
+
+    /**
+     * 解析并显示下一页数据
+     * @param json
+     */
+    protected void showNextPagerData(String json){
+        List<D> nextPagerData=getNextPagerData(json);
+        if (nextPagerData != null && nextPagerData.size() > 0) {
+            // 更新界面
+            datas.addAll(nextPagerData);
+            SystemClock.sleep(2000);
+            // 线程：子线程
+            MyApplication.getHandler().post(new Runnable() {
+                @Override
+                public void run() {
+                    notifyDataSetChanged();
+                }
+            });
+
+        } else {
+            nextPagerHolder.setData(NextPagerHolder.NULL);
+        }
+    }
+    /**
+     * 获取下一页数据
+     */
+    protected abstract List<D> getNextPagerData(String json);
+    private HomeInfo info;// info.list
+    private FragmentActivity activity;
+
+
+    public HomeAdapter(HomeInfo info, FragmentActivity activity) {
+        super(info.list);
+        this.info = info;
+        this.activity = activity;
+    }
+
+    // 如果加载其他样式的Item我们需要做的工作：
+    // 判断具体有那些样式：2种+1种（加载下一页）
+    private static final int CAROUSEL = 1; /* 轮播图模式*/
+
+    // 具体的操作内容：
+    // 1、添加getItemViewType，依据position去判断当前条目的样式
+    // 2、修改onCreateViewHolder，依据样式加载不同layout
+    // 3、修改onBindViewHolder，依据样式绑定不同数据
+
+    @Override
+    public BaseHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        BaseHolder holder = super.onCreateViewHolder(parent, viewType);
+
+        if (viewType == CAROUSEL) {
+            holder = new CarouselHolder(LayoutInflater.from(
+                    parent.getContext()).inflate(R.layout.fragment_home_carousel, parent,
+                    false));
+        }
+
+        return holder;
+    }
+
+    @Override
+    protected int getNomalLayoutDesId() {
+        return R.layout.item_appinfo;
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return CAROUSEL;
+        } else if (position == (datas.size() + 1)) {
+            return NEXTPAGER;
+        } else {
+            return NOMAL;
+        }
+    }
+
+
+    @Override
+    public void onBindViewHolder(BaseHolder holder, int position) {
+        super.onBindViewHolder(holder, position);
+        switch (holder.getItemViewType()) {
+            case CAROUSEL:
+                // 轮播
+                holder.setData(info.picture);
+                break;
+        }
+
+    }
+
+    @Override
+    protected AppInfo getNomalItemData(int position) {
+        return datas.get(position - 1);
+    }
+
+
+    @Override
+    protected String getPath() {
+        return Constants.Http.HOME;
+    }
+
+    @Override
+    protected List<AppInfo> getNextPagerData(String json) {
+        HomeInfo nextPager = MyApplication.getGson().fromJson(json, HomeInfo.class);
+        if (nextPager != null) {
+            return nextPager.list;
+        } else {
+            nextPagerHolder.setData(NextPagerHolder.NULL);
+        }
+        return null;
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return datas.size() + 1 + 1;// 轮播   下一页
+    }
+
+    /**
+     * 轮播使用的Holder
+     */
+    class CarouselHolder extends BaseHolder<List<String>> {
+
+        private final SliderLayout sliderLayout;
+
+        public CarouselHolder(View itemView) {
+            super(itemView);
+            sliderLayout = (SliderLayout) itemView;
+
+            // 高度的获取：保持图片的宽高比例不变
+            // 181/480
+            // 读取屏幕的宽度
+
+            Display defaultDisplay = activity.getWindowManager().getDefaultDisplay();
+            int height = defaultDisplay.getWidth() * 181 / 480;// 像素
+            RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, UIUtils.px2Dip(height));
+            sliderLayout.setLayoutParams(layoutParams);
+        }
+
+        public void setData(List<String> data) {
+            sliderLayout.removeAllSliders();
+            for (String item : data) {
+
+                // 创建Item项
+                // 添加到sliderLayout
+                DefaultSliderView sliderView = new DefaultSliderView(UIUtils.getContext());
+
+                // http://localhost:8080/GooglePlayServer/image?name=
+                StringBuffer iconUrlBuffer = new StringBuffer(Constants.Http.HOST);
+                HashMap<String, Object> params = new HashMap<>();
+                params.put("name", item);
+                iconUrlBuffer.append(Constants.Http.IMAGE).append(HttpUtils.getUrlParamsByMap(params));
+
+                sliderView.image(iconUrlBuffer.toString());
+                sliderLayout.addSlider(sliderView);
+            }
+
+        }
+    }
+}
+```
+
+
 
 
 

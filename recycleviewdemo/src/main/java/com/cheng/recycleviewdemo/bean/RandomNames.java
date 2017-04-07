@@ -2,10 +2,7 @@ package com.cheng.recycleviewdemo.bean;
 
 import java.util.Random;
 
-public class Randoms {
-    private static final Random sRandom = new Random();
-
-
+public class RandomNames {
     public static final String[] FIRST_NAMES = {"Zhao", "Qian", "Sun", "Li", "Zhou", "Wu"};
     public static final String[] LAST_NAMES = {"Tiedan", "Ritian", "LiangChen"};
 

@@ -38,7 +38,7 @@ public class HomeAdapter extends BaseRecyclerViewAdapter<AppInfo> {
 
     // 如果加载其他样式的Item我们需要做的工作：
     // 判断具体有那些样式：2种+1种（加载下一页）
-    private static final int CAROUSEL = 1;
+    private static final int CAROUSEL = 1; /* 轮播图模式*/
 
     // 具体的操作内容：
     // 1、添加getItemViewType，依据position去判断当前条目的样式
@@ -78,7 +78,7 @@ public class HomeAdapter extends BaseRecyclerViewAdapter<AppInfo> {
 
     @Override
     public void onBindViewHolder(BaseHolder holder, int position) {
-        super.onBindViewHolder(holder,position);
+        super.onBindViewHolder(holder, position);
         switch (holder.getItemViewType()) {
             case CAROUSEL:
                 // 轮播

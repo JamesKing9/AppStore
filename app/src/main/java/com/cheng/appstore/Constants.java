@@ -11,13 +11,13 @@ public class Constants {
 
         /**## 服务器主机 ip ##**/
         /**服务器在电脑上,直接ip访问*/
-//        public static final String HOST = "http://192.168.0.103:8080/GooglePlayServer/";
+        public static final String HOST = "http://192.168.0.103:8080/GooglePlayServer/";
         /**服务器在手机上*/
 //        public static final String HOST = "http://127.0.0.1:8080/GooglePlayServer/";
         /**服务器在电脑上,android模拟器访问*/
 //        public static final String HOST = "http://10.0.2.2:8080/GooglePlayServer/";
         /**服务器在电脑上,genymotion模拟器访问*/
-        public static final String HOST = "http://10.0.3.2:8080/GooglePlayServer/";
+//        public static final String HOST = "http://10.0.3.2:8080/GooglePlayServer/";
 
         /**## 主机资源的分类 ##**/
         public static final String HOME = "home";
