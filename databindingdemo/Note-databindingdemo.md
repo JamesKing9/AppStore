@@ -18,14 +18,15 @@ Data Binding 之前，我们不可避免地要编写大量的毫无营养的代�
 ## 1、开启DataBinding
 
 由于AndroidStudio已经默认集成了DataBinding，所以我们只需要将开关打开即可
-在应用的build.grandle中添加开启配置
+在应用的 build.gradle 中添加开启配置
+```
 android {
-
     ....
     dataBinding {
         enabled = true
     }
 }
+```
 
 ## 2、创建实体(一个 POJO 类)，并在Layout中绑定数据
 
@@ -140,7 +141,7 @@ android {
 
 此外，还要确定您使用的 Android Studio 支持 DataBinding 特性的。在 Android Studio 1.3 以及之后的版本提供了 data binding 的支持，详见 [Android Studio Support for Data Binding](http://developer.android.com/intl/zh-cn/tools/data-binding/guide.html#studio_support)。
 
-## Data Binding 中的布局文件入门
+# Data Binding 中的布局文件入门
 ### 1. 编写 data binding 表达式
 DataBinding 的布局文件与以前的布局文件有一点不同。它以一个 layout 标签作为根节点，里面包含一个 data 标签与 view 标签。view 标签的内容就是不使用 data binding 时的普通布局文件内容。例子如下：
 ```xml
@@ -346,7 +347,7 @@ Listener表达式非常强大，可以使您的代码非常容易阅读。另一
 | ZoomControls | setOnZoomInClickListener(View.OnClickListener) |   android:onZoomIn    |
 | ZoomControls | setOnZoomOutClickListener(View.OnClickListener) |   android:onZoomOut   |
 
-##  Data Binding 中的布局文件进阶
+#  DataBinding 中的布局文件进阶
 ### 1. import
 1.1 data标签内可以有0个或者多个 import 标签。你可以在布局文件中像使用 Java 一样导入引用。
 ```xml
@@ -449,7 +450,7 @@ Listener表达式非常强大，可以使您的代码非常容易阅读。另一
 
 ### 2. 自定义转换
 
-## Android Studio 对 Data binding 的支持的名称相关。
+# Android Studio 对 Data binding 的支持的名称相关。
 ```java
 @Override
 protected void onCreate(Bundle savedInstanceState) {
