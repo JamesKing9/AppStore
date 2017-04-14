@@ -23,17 +23,17 @@ import com.cheng.appstore.vm.fragment.FragmentFactory;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    private DrawerLayout drawerLayout;
+        private DrawerLayout drawerLayout;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
 
-        initView();
+            initView();
 
-        PermissionUtils.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE);
-    }
+            PermissionUtils.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
 
     private void initView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
