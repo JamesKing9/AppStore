@@ -53,11 +53,12 @@ public class AppUtils
 	/**
 	 * 打开应用程序
 	 * 
-	 * @param context
+	 * @param context 传入上下文
 	 * @param packageName
 	 */
 	public static void openApp(Context context, String packageName)
 	{
+		/* android.content.pm.PackageManager.getLaunchIntentForPackage */
 		Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
 		context.startActivity(intent);
 	}

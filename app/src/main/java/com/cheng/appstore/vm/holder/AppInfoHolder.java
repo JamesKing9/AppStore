@@ -68,6 +68,7 @@ public class AppInfoHolder extends BaseHolder<AppInfo> implements DownloadTaskOb
 
     /**
      * 初始化当前应用状态
+     * @param downloadInfo
      */
     public void init(DownloadInfo downloadInfo) {
         // 检查是否存在下载记录
