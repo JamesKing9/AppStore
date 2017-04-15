@@ -7,7 +7,7 @@ import android.os.Build;
 import java.util.ArrayList;
 
 /**
- * Android23后需要对明感权限进行使用前的校验
+ * Android 23后需要对明感权限进行使用前的校验
  */
 
 public class PermissionUtils {

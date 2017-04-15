@@ -62,7 +62,6 @@ public class AppInfoHolder extends BaseHolder<AppInfo> implements DownloadTaskOb
             changeUI(downLoadInfo);
         }
 
-
         binding.progress.setOnClickListener(this);
     }
 

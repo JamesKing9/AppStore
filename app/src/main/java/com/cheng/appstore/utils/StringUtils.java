@@ -11,6 +11,11 @@ import android.text.style.ForegroundColorSpan;
 
 import java.text.DecimalFormat;
 
+/**
+ * 该类的功能：
+ * 1、非空的判断；
+ * 2、格式化
+ */
 public class StringUtils {
 	public final static String UTF_8 = "utf-8";
 
