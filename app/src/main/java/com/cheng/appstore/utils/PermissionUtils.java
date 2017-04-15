@@ -29,7 +29,6 @@ public class PermissionUtils {
                     requestCode |= 1 << 0;
                     permissionsInfo.add(item);
                 }
-
             }
             if (requestCode > 0) {
                 String[] permission = new String[permissionsInfo.size()];
